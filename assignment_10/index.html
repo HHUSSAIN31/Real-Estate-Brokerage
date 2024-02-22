@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real Estate Website</title>
+    <link rel="stylesheet" href="home.css">
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.7.1.min.js"></script>
+    <style>
+        html,
+        body {
+            height: 800px;
+            padding: 10px;
+            margin: 10px;
+        }
+
+        #map {
+            width: 100%;
+            height: 400px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="bg">
+        <img src="bg.jpeg">
+    </div>
+    <nav>
+        <ul>
+            <li><a href="http://clabsql.clamv.jacobs-university.de/~hhussain/assignment_9/search/apartment_search.html">Apartment Search</a></li>
+            <li><a href="http://clabsql.clamv.jacobs-university.de/~hhussain/assignment_9/search/house_search.html">House Search</a></li>
+            <li><a href="http://clabsql.clamv.jacobs-university.de/~hhussain/assignment_9/search/zip_search.html">Zip Search</a></li>
+            <li class="logo"><img src="img/logo.png" alt="Logo"></li>
+            <li><a href="https://clabsql.clamv.jacobs-university.de/~hhussain/assignment_9/imprint.php">Imprint</a></li>
+            <li class="dropdown">
+                <div class="dropdown-content">
+                    <a href="http://clabsql.clamv.jacobs-university.de/~hhussain/assignment_9/login/login.php">Log In</a>
+                </div>
+            </li>
+        </ul>
+        <h1>REAL ESTATE BROKERAGE</h1>
+    </nav>
+
+    <div class="search-container">
+        <h2 class="search-header">Find your new Property</h2>
+    </div>
+
+
+    <div id="map"></div>
+    <script>
+        var ip;
+        var latitude;
+        var longitude;
+        $.get('https://www.cloudflare.com/cdn-cgi/trace', function (data) {
+
+            data = data.trim().split('\n').reduce(function (obj, pair) {
+                pair = pair.split('=');
+                return obj[pair[0]] = pair[1], obj;
+            }, {});
+            ip = data.ip;
+        })
+            .then(res => {
+                url = `https://ipinfo.io/${ip}\?token=0631cb3c12ead6`;
+                fetch(url)
+                    .then(response => {
+                        if (response.ok) {
+                            return response.json();
+                        }
+                    })
+                    .then(json => {
+                        var loc = json.loc.split(',');
+                        latitude = parseFloat(loc[0]);
+                        longitude = parseFloat(loc[1]);
+
+                        var map = L.map('map').setView([latitude, longitude], 8);
+                        map.flyTo([latitude, longitude], 8);
+
+
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                        }).addTo(map);
+
+
+                        L.control.scale({ imperial: true, metric: true }).addTo(map);
+
+
+                        L.marker([latitude, longitude]).bindPopup(`${ip}`).addTo(map);
+                    })
+                    .catch(error => {
+
+                    });
+            });
+    </script>
+
+</body>
+
+</html>

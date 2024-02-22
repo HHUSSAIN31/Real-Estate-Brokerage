@@ -1,0 +1,106 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+}
+
+nav {
+    background-color: #333;
+    text-align: center;
+    padding: 20px 0;
+}
+
+    nav ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+        nav ul li {
+            display: inline;
+            margin: 0 10px; /* Decreased the margin to make them closer together */
+        }
+
+
+
+            nav ul li a {
+                color: white;
+                text-decoration: none;
+                transition: none;
+            }
+
+            nav ul li.logo {
+                flex: 1;
+            }
+
+                nav ul li.logo img {
+                    width: 80px; /* Adjust the size as needed */
+                    margin-right: 10px; /* Move logo slightly towards the center */
+                }
+
+            nav ul li.dropdown {
+                position: relative;
+                display: inline-block;
+            }
+
+.nav ul li.dropdown .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #333;
+    min-width: 100px;
+    z-index: 1;
+}
+
+.nav ul li.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+nav h1 {
+    font-size: 24px;
+}
+
+.search-container {
+    text-align: center;
+    padding: 50px 0;
+    background-image: url('your-landscape-image.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 25vh; /* 25% of the viewport height */
+    position: relative;
+}
+
+.search-header {
+    font-size: 36px;
+    color: white;
+    text-shadow: -1px -1px 1px black, 1px -1px 1px black, -1px 1px 1px black, 1px 1px 1px black;
+}
+
+.search-bar {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    display: inline-block;
+    width: 70%;
+    max-width: 500px;
+}
+
+    .search-bar input {
+        width: 100%;
+        padding: 10px;
+        border: none;
+        border-bottom: 2px solid #333;
+        font-style: italic;
+    }
